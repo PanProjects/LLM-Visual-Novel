@@ -1,0 +1,35 @@
+{
+  "name": "infinitale",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Infinitale — an AI-powered, agentic visual novel with graph memory and infinite branching.",
+  "scripts": {
+    "dev": "concurrently -k -n web,agents -c cyan,magenta \"vite\" \"npm:server\"",
+    "server": "tsx watch server/index.ts",
+    "build": "vite build",
+    "preview": "concurrently -k -n web,agents -c cyan,magenta \"vite preview --port 5173\" \"npm:server\""
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "framer-motion": "^11.15.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.0.0",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.10.5",
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "^18.3.5",
+    "@vitejs/plugin-react": "^4.3.4",
+    "concurrently": "^9.1.2",
+    "tailwindcss": "^4.0.0",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.3",
+    "vite": "^6.0.7"
+  }
+}

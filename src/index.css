@@ -1,0 +1,121 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Cinzel", serif;
+  --font-prose: "Cormorant Garamond", serif;
+  --font-ui: "Inter", system-ui, sans-serif;
+
+  --color-ink: #0a0710;
+  --color-parchment: #f4ecdf;
+}
+
+:root {
+  /* Live scene palette — updated by JS as the story shifts mood. */
+  --scene-primary: #1a1326;
+  --scene-secondary: #3a2a55;
+  --scene-accent: #c9a86a;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background: var(--color-ink);
+  color: var(--color-parchment);
+  font-family: var(--font-ui);
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Reusable bits ------------------------------------------------------------ */
+
+.font-display {
+  font-family: var(--font-display);
+  letter-spacing: 0.04em;
+}
+.font-prose {
+  font-family: var(--font-prose);
+}
+
+/* Glassmorphic surface keyed to the live scene accent. */
+.glass {
+  background: rgba(12, 8, 20, 0.55);
+  backdrop-filter: blur(18px) saturate(1.2);
+  -webkit-backdrop-filter: blur(18px) saturate(1.2);
+  border: 1px solid color-mix(in srgb, var(--scene-accent) 22%, transparent);
+}
+
+.accent-text {
+  color: var(--scene-accent);
+}
+
+.vignette::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 40%,
+    rgba(0, 0, 0, 0.55) 100%
+  );
+}
+
+/* Film grain overlay. */
+.grain::before {
+  content: "";
+  position: fixed;
+  inset: -50%;
+  pointer-events: none;
+  opacity: 0.045;
+  z-index: 50;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: grain 0.6s steps(2) infinite;
+}
+@keyframes grain {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(-2%, 1%); }
+}
+
+/* Custom scrollbar. */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--scene-accent) 35%, transparent);
+  border-radius: 99px;
+}
+
+/* Blinking typewriter caret. */
+.caret::after {
+  content: "▍";
+  margin-left: 1px;
+  color: var(--scene-accent);
+  animation: blink 1s steps(2) infinite;
+}
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+.text-shadow-cinema {
+  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.8), 0 1px 2px rgba(0, 0, 0, 0.9);
+}
+
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+.float-slow {
+  animation: float-slow 6s ease-in-out infinite;
+}
+
+/* Hide scrollbars where we want clean overflow. */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { scrollbar-width: none; }

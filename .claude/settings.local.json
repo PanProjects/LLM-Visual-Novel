@@ -1,0 +1,28 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm --version)",
+      "Bash(npm install *)",
+      "Bash(npx tsx *)",
+      "Bash(curl -s http://localhost:8787/api/health)",
+      "Bash(curl -s -X POST http://localhost:8787/api/start -H \"Content-Type: application/json\" -d '{\"mode\":\"random\"}' -o start.json -w \"HTTP %{http_code}\\\\n\")",
+      "Bash(node -e \"const d=require\\('./start.json'\\); console.log\\('TITLE:',d.worldBible?.title,'|',d.worldBible?.genre\\); console.log\\('NODES:',d.graph?.nodes?.length,'EDGES:',d.graph?.edges?.length\\); console.log\\('SCRIPT entries:',d.scene?.script?.length\\); console.log\\('CHOICES:',d.scene?.choices?.map\\(c=>c.label\\)\\); console.log\\('SESSION:',d.sessionId\\); console.log\\('PALETTE:',JSON.stringify\\(d.scene?.palette\\),'AMBIENT:',d.scene?.ambient\\);\")",
+      "Bash(node -e \"console.log\\(require\\('./start.json'\\).sessionId\\)\")",
+      "Bash(node -e \"console.log\\(require\\('./start.json'\\).scene.choices[0].label\\)\")",
+      "Bash(curl -s -X POST http://localhost:8787/api/turn -H 'Content-Type: application/json' -d '{\"sessionId\":\"__TRACKED_VAR__\",\"choice\":\"__TRACKED_VAR__\"}' -o turn.json -w 'HTTP %{http_code}\\\\n')",
+      "Bash(node -e \"const d=require\\('./turn.json'\\); if\\(d.error\\){console.log\\('ERROR',d.error\\);process.exit\\(1\\);} console.log\\('TRACE:'\\); d.trace.forEach\\(t=>console.log\\('  ['+t.agent+']',t.summary,'—',t.detail||''\\)\\); console.log\\('ARC:',JSON.stringify\\(d.arc\\)\\); console.log\\('NEW GRAPH:',d.graph.nodes.length,'nodes',d.graph.edges.length,'edges'\\); console.log\\('NEXT CHOICES:',d.scene.choices.map\\(c=>c.label\\)\\); console.log\\('isEnding:',d.scene.isEnding\\);\")",
+      "Bash(npx tsc *)",
+      "Bash(npm run *)",
+      "Bash(curl -s http://localhost:5173/ -o /dev/null -w \"HTTP %{http_code}\\\\n\")",
+      "Bash(curl -s http://localhost:5173/api/health)",
+      "Bash(powershell.exe -Command \"\\(Get-NetTCPConnection -LocalPort 8787 -State Listen -ErrorAction SilentlyContinue\\).Count\")",
+      "Bash(rm -f dev.log)",
+      "Bash(node verify.mjs)",
+      "Bash(node verify2.mjs)",
+      "Bash(node debug.mjs)",
+      "Bash(rm -f verify.mjs verify2.mjs debug.mjs shot-start.png shot-scene.png shot-choices.png shot-graph.png dev.log)",
+      "Bash(npm uninstall *)",
+      "Bash(curl -s http://localhost:5173/ -o /dev/null -w \"web HTTP %{http_code}\\\\n\")"
+    ]
+  }
+}
