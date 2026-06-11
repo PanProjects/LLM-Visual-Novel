@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+/* Keep Tailwind's automatic source scanning out of the docs assets folder
+   (its SVGs would otherwise trip Vite's CSS analyzer). */
+@source not "../assets";
+
 @theme {
   --font-display: "Cinzel", serif;
   --font-prose: "Cormorant Garamond", serif;
