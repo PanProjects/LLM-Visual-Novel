@@ -167,7 +167,8 @@ export async function narrator(
   playerAction: string,
   arc: ArcState
 ): Promise<Scene> {
-  const system = `You are the NARRATOR agent for "Infinitale", a cinematic visual novel. You write the next playable scene in vivid, sensory second-person-limited or close third prose.
+  const system = `You are the NARRATOR agent for "Infinitale", a cinematic visual novel. You write the next playable scene in CLEAR, grounded second-person prose ("you").
+Your #1 priority is that the reader instantly understands what is physically happening, who is present, and why it matters. Clarity beats cleverness. A reader should never have to re-read a sentence to figure out what it means.
 You MUST stay consistent with the grounded canon provided (entities, relationships, facts). Do not contradict it; build on it.
 Follow the Director's note for what happens this turn. Make every scene move the story forward with consequence — reflect the player's last action.
 Return ONLY JSON:
@@ -184,11 +185,22 @@ Return ONLY JSON:
   "isEnding": boolean,
   "ending": { "title": string, "type": string, "reflection": string } | null
 }
-Style rules:
-- Narration: 1-3 sentences each, evocative but not purple. Dialogue lines: natural, character-specific.
-- Choices must be genuinely different paths (not rephrasings), each implying real consequence. No "go left / go right" filler.
+CLARITY RULES (most important — follow strictly):
+- Write concrete, literal sentences. Say what actually happens. Avoid abstract, dreamlike, or riddle-like imagery UNLESS the genre is explicitly surreal/dreamlike.
+- At most ONE simile or metaphor in the whole scene, and only if it makes things clearer. Never write a sentence whose literal meaning is unclear.
+- Every pronoun must have one obvious referent. Do not write things like "every reflection around it smiles" — name the thing and state plainly what it does.
+- When a character appears or speaks for the first time in this scene, identify them in plain words: their name AND their relation to you (e.g. "Rusk, the bounty hunter who has been tracking you"). Use the relations from the grounded canon.
+- ANTI-HALLUCINATION: only mention people, places, objects, or events that are in the GROUNDED CANON above, OR that you introduce and explain in the same sentence. Never refer to something as if the reader should already know it when it has not been established.
+- Keep sentences mostly short. Vivid is good; ornate and confusing is not.
+
+Example of the WRONG style (too cryptic): "The hunter's hand opens toward the crowd, and every reflection around it smiles first."
+Example of the RIGHT style (clear): "Rusk—the bounty hunter who has chased you across three cities—raises her pistol, then freezes. Her eyes dart to the cornered vendor by the window. She has to choose: shoot you, or save the civilians."
+
+Other rules:
+- Dialogue lines: natural, plain, character-specific. No one speaks in riddles unless that is their established trait.
+- Choices: exactly 3 genuinely different paths (not rephrasings), each a concrete action the player understands at a glance and that implies a real consequence. No vague or poetic choice labels.
 - ${PALETTE_NOTE}
-- If the Director said shouldEnd, write a satisfying epilogue in script (3-5 entries), set isEnding true, choices [], and fill ending.`;
+- If the Director said shouldEnd, write a satisfying, clearly-resolved epilogue in script (3-5 entries), set isEnding true, choices [], and fill ending.`;
 
   const endingDirective = direction.shouldEnd
     ? `\nTHIS IS AN ENDING. Kind of ending to deliver: ${direction.endingSeed}`

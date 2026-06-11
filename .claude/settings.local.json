@@ -22,7 +22,9 @@
       "Bash(node debug.mjs)",
       "Bash(rm -f verify.mjs verify2.mjs debug.mjs shot-start.png shot-scene.png shot-choices.png shot-graph.png dev.log)",
       "Bash(npm uninstall *)",
-      "Bash(curl -s http://localhost:5173/ -o /dev/null -w \"web HTTP %{http_code}\\\\n\")"
+      "Bash(curl -s http://localhost:5173/ -o /dev/null -w \"web HTTP %{http_code}\\\\n\")",
+      "Bash(curl -s -X POST http://localhost:5173/api/start -H \"Content-Type: application/json\" -d '{\"mode\":\"random\"}' -o s.json -w \"start HTTP %{http_code}\\\\n\")",
+      "Bash(node -e ' *)"
     ]
   }
 }
